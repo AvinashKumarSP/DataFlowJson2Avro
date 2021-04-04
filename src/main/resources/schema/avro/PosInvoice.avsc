@@ -1,0 +1,14 @@
+{
+  "namespace": "com.example.types.avro",
+  "type": "record",
+  "name": "PosInvoice",
+  "fields": [
+    { "name" : "DateTime", "type": ["null","long"], "logicalType": "timestamp-millis", "default": null},
+    { "name" : "StoreID", "type": ["null","string"], "default": null},
+    { "name" : "PosID", "type": ["null","string"], "default": null},
+    { "name" : "CustomerType", "type": ["null","string"], "default": null},
+    { "name" : "DeliveryType", "type": ["null","string"], "default": null},
+    { "name" : "ItemsCostList", "type": {"type": "array", "items": "int"}, "default": null},
+    { "name" : "NumberOfItems", "type": ["null","int"], "default": null}
+  ]
+}

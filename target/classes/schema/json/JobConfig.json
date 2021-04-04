@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "javaType": "com.example.types.JobConfig",
+  "javaInterfaces" : ["java.io.Serializable"],
+  "properties": {
+    "header": {"type": "string"},
+    "skipHeader": {"type": "boolean"},
+    "skipTrailer": {"type": "boolean"},
+    "jsonSchemaClass": {"type": "string"},
+    "avroSchemaClass": {"type": "string"},
+    "inputFilePath": {"type": "string"},
+    "outputFilePath": {"type": "string"},
+    "avroDirectory": {"type": "string"},
+    "avroSchemaPath": {"type": "string"},
+    "srcToTgtMap": {"type": "string"},
+    "standardization": {
+      "type": "object",
+      "$ref": "Standardization.json"}
+    }
+}

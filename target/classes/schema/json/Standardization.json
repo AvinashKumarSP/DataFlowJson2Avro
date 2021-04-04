@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "javaType": "com.example.types.Standardization",
+  "javaInterfaces" : ["java.io.Serializable"],
+  "properties": {
+
+    "dateUtc": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "stringToInteger": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "dataMask": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "stringArrToIntegerArr": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  }
+}
+

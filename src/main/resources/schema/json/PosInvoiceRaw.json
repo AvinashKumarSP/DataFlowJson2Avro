@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "javaType": "com.example.types.json.PosInvoiceRaw",
+  "properties": {
+    "date_time": {"type": "string"},
+    "store_id": {"type": "string"},
+    "pos_id": {"type": "string"},
+    "customer_type": {"type": "string"},
+    "delivery_type": {"type": "string"},
+    "items_cost_list": {
+      "type": "array",
+      "items": {"type": "object","javaType": "java.lang.Integer"}
+    },
+    "number_of_items":  {"type": "object","javaType": "java.lang.Integer"}
+  }
+}

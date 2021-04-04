@@ -1,0 +1,16 @@
+com/example/dataflow/utils/Utility.class
+com/example/dataflow/builder/PosInvoiceBuilder.class
+com/example/types/avro/PosInvoice$Builder.class
+com/example/types/Standardization.class
+com/example/dataflow/config/CustomOptions.class
+com/example/dataflow/builder/AvroBuilder.class
+com/example/types/avro/PosInvoice.class
+com/example/types/JobConfig.class
+com/example/dataflow/utils/DataPreProcess.class
+com/example/dataflow/utils/Constants.class
+com/example/dataflow/builder/BuilderFactory.class
+com/example/types/json/PosInvoiceRaw.class
+com/example/dataflow/pipeline/JsonToAvroConverter.class
+com/example/dataflow/transformer/JsonToAvroFn.class
+com/example/Test.class
+com/example/types/avro/PosInvoice$1.class
