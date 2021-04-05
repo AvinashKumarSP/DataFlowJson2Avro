@@ -6,6 +6,10 @@ import org.slf4j.LoggerFactory;
 
 
 import java.io.Serializable;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 public class DataPreProcess implements Serializable {
@@ -14,12 +18,14 @@ public class DataPreProcess implements Serializable {
 
     private Standardization standardization;
     private List<String> dataMask;
+    private List<String> dateUtc;
     private List<String> stringToInteger;
     private List<String> stringArrToIntegerArr;
 
     public DataPreProcess(Standardization standardization){
         this.standardization=standardization;
         this.dataMask=standardization.getDataMask();
+        this.dateUtc=standardization.getDateUtc();
         this.stringToInteger=standardization.getStringToInteger();
         this.stringArrToIntegerArr=standardization.getStringArrToIntegerArr();
 
@@ -37,13 +43,14 @@ public class DataPreProcess implements Serializable {
 
         Object strToIntResult = StringToInteger(srcField, value);
         Object dataMaskResult = DataMask(srcField, strToIntResult);
+        Object dateUtcResult = DateUtc(srcField,dataMaskResult);
 
-        return dataMaskResult;
+        return dateUtcResult;
     }
 
     public Object StringToInteger(String srcField, Object value) throws NumberFormatException{
 
-        if (stringToInteger.contains(value.toString())){
+        if (stringToInteger.contains(srcField)){
             return Integer.parseInt((String)value);
         }else{
             return value;
@@ -51,10 +58,16 @@ public class DataPreProcess implements Serializable {
 
     }
 
-    public Object DateUtc(String srcField, Object value) throws NumberFormatException{
+    public Object DateUtc(String srcField, Object value) throws DateTimeParseException {
 
-        if (stringToInteger.contains(value.toString())){
-            return Integer.parseInt((String)value);
+
+        if (dateUtc.contains(srcField)){
+
+            OffsetDateTime parsedDateTime = OffsetDateTime.parse(value.toString());
+            ZonedDateTime dateTimeInMyTimeZone
+                    = parsedDateTime.atZoneSameInstant(ZoneId.systemDefault());
+            System.out.println("Teeeeeeee"+dateTimeInMyTimeZone.toInstant().toEpochMilli());
+            return dateTimeInMyTimeZone.toInstant().toEpochMilli();
         }else{
             return value;
         }
@@ -63,7 +76,7 @@ public class DataPreProcess implements Serializable {
 
     public Object DataMask(String srcField, Object value) throws NumberFormatException{
 
-        if (dataMask.contains(value.toString())){
+        if (dataMask.contains(srcField)){
             System.out.println("Data Masking exists");
             return value;
         }else{

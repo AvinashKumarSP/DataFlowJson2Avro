@@ -1,6 +1,7 @@
 package com.example.dataflow.builder;
 
 import org.apache.avro.generic.GenericRecord;
+import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -20,6 +21,6 @@ public interface AvroBuilder {
      * @param trgtToSrcMap
      * @return
      */
-    GenericRecord build(String schema, Map<String,Object> recordMap,
+    GenericRecord build(String schema, JSONObject recordMap,
                                      Map<String,String> trgtToSrcMap);
 }

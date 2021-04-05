@@ -10,11 +10,11 @@ import org.apache.avro.specific.SpecificData;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class PosInvoice extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 2661141816802863804L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"PosInvoice\",\"namespace\":\"com.example.types.avro\",\"fields\":[{\"name\":\"DateTime\",\"type\":[\"null\",\"long\"],\"default\":null,\"logicalType\":\"timestamp-millis\"},{\"name\":\"StoreID\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"PosID\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"CustomerType\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"DeliveryType\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"ItemsCostList\",\"type\":{\"type\":\"array\",\"items\":\"int\"},\"default\":null},{\"name\":\"NumberOfItems\",\"type\":[\"null\",\"int\"],\"default\":null}]}");
+  private static final long serialVersionUID = -7749801797235330174L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"PosInvoice\",\"namespace\":\"com.example.types.avro\",\"fields\":[{\"name\":\"DateTime\",\"type\":[\"null\",\"long\"],\"default\":null,\"logicalType\":\"timestamp-millis\"},{\"name\":\"StoreID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"PosID\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"CustomerType\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"DeliveryType\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"ItemsCostList\",\"type\":{\"type\":\"array\",\"items\":\"int\"},\"default\":null},{\"name\":\"NumberOfItems\",\"type\":[\"null\",\"int\"],\"default\":null}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
   @Deprecated public java.lang.Long DateTime;
-  @Deprecated public java.lang.CharSequence StoreID;
+  @Deprecated public java.lang.Integer StoreID;
   @Deprecated public java.lang.CharSequence PosID;
   @Deprecated public java.lang.CharSequence CustomerType;
   @Deprecated public java.lang.CharSequence DeliveryType;
@@ -38,7 +38,7 @@ public class PosInvoice extends org.apache.avro.specific.SpecificRecordBase impl
    * @param ItemsCostList The new value for ItemsCostList
    * @param NumberOfItems The new value for NumberOfItems
    */
-  public PosInvoice(java.lang.Long DateTime, java.lang.CharSequence StoreID, java.lang.CharSequence PosID, java.lang.CharSequence CustomerType, java.lang.CharSequence DeliveryType, java.util.List<java.lang.Integer> ItemsCostList, java.lang.Integer NumberOfItems) {
+  public PosInvoice(java.lang.Long DateTime, java.lang.Integer StoreID, java.lang.CharSequence PosID, java.lang.CharSequence CustomerType, java.lang.CharSequence DeliveryType, java.util.List<java.lang.Integer> ItemsCostList, java.lang.Integer NumberOfItems) {
     this.DateTime = DateTime;
     this.StoreID = StoreID;
     this.PosID = PosID;
@@ -68,7 +68,7 @@ public class PosInvoice extends org.apache.avro.specific.SpecificRecordBase impl
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: DateTime = (java.lang.Long)value$; break;
-    case 1: StoreID = (java.lang.CharSequence)value$; break;
+    case 1: StoreID = (java.lang.Integer)value$; break;
     case 2: PosID = (java.lang.CharSequence)value$; break;
     case 3: CustomerType = (java.lang.CharSequence)value$; break;
     case 4: DeliveryType = (java.lang.CharSequence)value$; break;
@@ -98,7 +98,7 @@ public class PosInvoice extends org.apache.avro.specific.SpecificRecordBase impl
    * Gets the value of the 'StoreID' field.
    * @return The value of the 'StoreID' field.
    */
-  public java.lang.CharSequence getStoreID() {
+  public java.lang.Integer getStoreID() {
     return StoreID;
   }
 
@@ -106,7 +106,7 @@ public class PosInvoice extends org.apache.avro.specific.SpecificRecordBase impl
    * Sets the value of the 'StoreID' field.
    * @param value the value to set.
    */
-  public void setStoreID(java.lang.CharSequence value) {
+  public void setStoreID(java.lang.Integer value) {
     this.StoreID = value;
   }
 
@@ -223,7 +223,7 @@ public class PosInvoice extends org.apache.avro.specific.SpecificRecordBase impl
     implements org.apache.avro.data.RecordBuilder<PosInvoice> {
 
     private java.lang.Long DateTime;
-    private java.lang.CharSequence StoreID;
+    private java.lang.Integer StoreID;
     private java.lang.CharSequence PosID;
     private java.lang.CharSequence CustomerType;
     private java.lang.CharSequence DeliveryType;
@@ -350,7 +350,7 @@ public class PosInvoice extends org.apache.avro.specific.SpecificRecordBase impl
       * Gets the value of the 'StoreID' field.
       * @return The value.
       */
-    public java.lang.CharSequence getStoreID() {
+    public java.lang.Integer getStoreID() {
       return StoreID;
     }
 
@@ -359,7 +359,7 @@ public class PosInvoice extends org.apache.avro.specific.SpecificRecordBase impl
       * @param value The value of 'StoreID'.
       * @return This builder.
       */
-    public com.example.types.avro.PosInvoice.Builder setStoreID(java.lang.CharSequence value) {
+    public com.example.types.avro.PosInvoice.Builder setStoreID(java.lang.Integer value) {
       validate(fields()[1], value);
       this.StoreID = value;
       fieldSetFlags()[1] = true;
@@ -585,7 +585,7 @@ public class PosInvoice extends org.apache.avro.specific.SpecificRecordBase impl
       try {
         PosInvoice record = new PosInvoice();
         record.DateTime = fieldSetFlags()[0] ? this.DateTime : (java.lang.Long) defaultValue(fields()[0]);
-        record.StoreID = fieldSetFlags()[1] ? this.StoreID : (java.lang.CharSequence) defaultValue(fields()[1]);
+        record.StoreID = fieldSetFlags()[1] ? this.StoreID : (java.lang.Integer) defaultValue(fields()[1]);
         record.PosID = fieldSetFlags()[2] ? this.PosID : (java.lang.CharSequence) defaultValue(fields()[2]);
         record.CustomerType = fieldSetFlags()[3] ? this.CustomerType : (java.lang.CharSequence) defaultValue(fields()[3]);
         record.DeliveryType = fieldSetFlags()[4] ? this.DeliveryType : (java.lang.CharSequence) defaultValue(fields()[4]);

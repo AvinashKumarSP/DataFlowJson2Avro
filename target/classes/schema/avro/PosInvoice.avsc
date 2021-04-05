@@ -4,7 +4,7 @@
   "name": "PosInvoice",
   "fields": [
     { "name" : "DateTime", "type": ["null","long"], "logicalType": "timestamp-millis", "default": null},
-    { "name" : "StoreID", "type": ["null","string"], "default": null},
+    { "name" : "StoreID", "type": ["null","int"], "default": null},
     { "name" : "PosID", "type": ["null","string"], "default": null},
     { "name" : "CustomerType", "type": ["null","string"], "default": null},
     { "name" : "DeliveryType", "type": ["null","string"], "default": null},

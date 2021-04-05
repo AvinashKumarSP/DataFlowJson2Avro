@@ -2,6 +2,7 @@ package com.example.dataflow.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.beam.sdk.io.FileSystems;
+import org.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -54,5 +56,18 @@ public interface Utility {
         } catch (ClassNotFoundException | IOException ex) {
             return false;
         }
+    }
+
+    static ArrayList<Object> jsonArrToList(JSONArray jsonArray){
+        ArrayList<Object> objectArrayList = new ArrayList<Object>();
+        //Checking whether the JSON array has some value or not
+        if (jsonArray != null) {
+            //Iterating JSON array
+            for (int i=0;i<jsonArray.length();i++){
+                //Adding each element of JSON array into ArrayList
+                objectArrayList.add(jsonArray.get(i));
+            }
+        }
+        return objectArrayList;
     }
 }

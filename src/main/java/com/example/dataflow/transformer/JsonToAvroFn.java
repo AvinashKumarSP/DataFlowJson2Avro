@@ -6,6 +6,8 @@ import com.example.dataflow.utils.DataPreProcess;
 import com.example.dataflow.utils.Utility;
 
 import com.example.types.Standardization;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.beam.sdk.transforms.DoFn;
 import org.json.JSONObject;
@@ -14,6 +16,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,25 +69,33 @@ public class JsonToAvroFn extends DoFn<String, GenericRecord> implements Seriali
      * @throws IOException
      */
     @DoFn.ProcessElement
-    public void processElement(ProcessContext ctx) throws IllegalArgumentException, IOException {
+    public void processElement(ProcessContext ctx) throws IllegalArgumentException, IOException, ClassNotFoundException {
         System.out.println("eeeeeeeee");
         boolean isVaildJson = Utility.jsonValidator(ctx.element(),jsonSchemaClass);
         if (isVaildJson){
             System.out.println("eeeeeeeee11111");
             JSONObject jsonObject = new JSONObject(ctx.element());
+            ObjectMapper objectMapper = new ObjectMapper();
 
             //Store source field name as key and value as standardized value
-            HashMap<String,Object> recordMap = new HashMap<>();
+            HashMap<String,Object> recordMap = objectMapper.readValue(ctx.element(), new TypeReference<Map<String, Object>>(){});
+            //HashMap<String,Object> recordMap = new HashMap<>();
             //Pass source field name and its respective value to Standardize
             for (Map.Entry<String, String> entry : srcToTgtMap.entrySet()) {
                 String key = entry.getKey();
-                System.out.println("Tessssss"+srcToTgtMap);
+                System.out.println("Tessssss111"+jsonObject.get(key));
                 Object value = dataPreProcess.invokeStandardizer(key, jsonObject.get(key));
-                recordMap.put(key,value);
+                jsonObject.put(key,value);
             }
 
             AvroBuilder avroBuilder = BuilderFactory.getAvroBuilder(avroSchemaClass).get();
-            GenericRecord genericRecord = avroBuilder.build(avroSchema, recordMap, tgtToSrcMap);
+            System.out.println("vaaa"+jsonObject);
+            ObjectMapper mapper = new ObjectMapper();
+
+            GenericRecord genericRecord = avroBuilder.build(avroSchema, jsonObject, tgtToSrcMap);
+            System.out.println("vaaa"+jsonObject);
+            //
+            //objmapp.readValue(jsonObject.toString(),Class.forName(jsonSchemaClass));
             System.out.println(genericRecord.toString());
             ctx.output(genericRecord);
         }

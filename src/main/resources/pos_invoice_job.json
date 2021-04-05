@@ -4,7 +4,7 @@
   "inputFilePath": "/Users/sushma/IdeaProjects/DataFlowJson2Avro/src/main/input/pos_invoice.jsonl",
   "outputFilePath": "/Users/sushma/IdeaProjects/DataFlowJson2Avro/src/main/output/",
   "avroSchemaPath": "/Users/sushma/IdeaProjects/DataFlowJson2Avro/src/main/resources/schema/avro/PosInvoice.avsc",
-  "srcToTgtMap": "date_time:DateTime,store_id:StoreID,pos_id:PosID,customer_type:CustomerType,delivery_type:DeliveryType,items_cost_list:ItemCostList,number_of_items:NumberOfItems",
+  "srcToTgtMap": "date_time:DateTime,store_id:StoreID,pos_id:PosID,customer_type:CustomerType,delivery_type:DeliveryType,items_cost_list:ItemsCostList,number_of_items:NumberOfItems",
   "standardization": {
     "stringToInteger": ["store_id"],
     "dateUtc": ["date_time"]
