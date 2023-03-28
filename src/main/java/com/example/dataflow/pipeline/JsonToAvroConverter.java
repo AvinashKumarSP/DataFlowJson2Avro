@@ -4,8 +4,11 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import com.example.dataflow.config.CustomOptions;
+import com.example.dataflow.transformer.Failure;
 import com.example.dataflow.transformer.JsonToAvroFn;
+import com.example.dataflow.transformer.JsonToAvroFnV1;
 import com.example.dataflow.utils.DataPreProcess;
+import com.example.dataflow.utils.Standardizer;
 import com.example.dataflow.utils.Utility;
 import com.example.types.JobConfig;
 import com.example.types.Standardization;
@@ -19,9 +22,15 @@ import org.apache.beam.sdk.io.AvroIO;
 import org.apache.beam.sdk.io.FileSystems;
 import org.apache.beam.sdk.io.TextIO;
 import org.apache.beam.sdk.options.*;
+import org.apache.beam.sdk.transforms.Count;
 import org.apache.beam.sdk.transforms.ParDo;
+import org.apache.beam.sdk.values.PCollection;
+import org.apache.beam.sdk.values.PCollectionTuple;
+import org.apache.beam.sdk.values.TupleTag;
+import org.apache.beam.sdk.values.TupleTagList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 /**
  * <p>This class, {@link JsonToAvroConverter}, is to read the jsonl input file,
@@ -70,26 +79,36 @@ public class JsonToAvroConverter {
         String jsonConfig = Utility.readFile(options.getJobConfigFile());
         ObjectMapper objMapper = new ObjectMapper();
         JobConfig jobConfig = objMapper.readValue(jsonConfig, JobConfig.class);
+        String feedName = jobConfig.getFeedName();
         //Standardize object initialization
         Standardization standardization = jobConfig.getStandardization();
-        DataPreProcess dataPreProcess = new DataPreProcess(standardization);
+        Standardizer standardizer = new Standardizer(standardization);
         String jsonSchemaClass = jobConfig.getJsonSchemaClass();
         String avroSchema = Utility.readFile(jobConfig.getAvroSchemaPath());
         HashMap<String,String> srcToTgtMap = Utility.getSrcToTgtMap(jobConfig.getSrcToTgtMap());
         String avroSchemaClass = jobConfig.getAvroSchemaClass();
+        String jsonSchemaPath = jobConfig.getJsonSchemaPath();
         Schema avroSchemaObj = new Schema.Parser().parse(avroSchema);
-
+        JsonToAvroFnV1 jsonToAvroFn = new JsonToAvroFnV1(feedName, standardizer, srcToTgtMap,
+                jsonSchemaClass, avroSchema, avroSchemaClass, jsonSchemaPath);
         // Create the Pipeline object with the options we defined above.
         Pipeline pipeline = Pipeline.create(options);
         System.out.println("Before starting pipeline");
         // Convert CSV to Avro
-        pipeline.apply("Read Json files", TextIO.read().from(jobConfig.getInputFilePath()))
+        PCollection<String> jsonCollection = pipeline.apply("Read Json files",
+                TextIO.read().from(jobConfig.getInputFilePath()));
+        PCollection<Long> recordCount = jsonCollection.apply(Count.globally());
+        PCollectionTuple processTuple = jsonCollection
                 .apply("Convert Json to Avro formatted data",
-                        ParDo.of(new JsonToAvroFn(dataPreProcess, srcToTgtMap,
-                                jsonSchemaClass, avroSchema, avroSchemaClass)))
-                .setCoder(AvroCoder.of(GenericRecord.class, avroSchemaObj))
-                .apply("Write Avro formatted data", AvroIO.writeGenericRecords(avroSchema)
-                        .to(jobConfig.getOutputFilePath()).withCodec(CodecFactory.snappyCodec()).withSuffix(".avro"));
+                        ParDo.of(jsonToAvroFn).withOutputTags(JsonToAvroFnV1.validTag,
+                                TupleTagList.of(JsonToAvroFnV1.failuresTag)));
+        PCollection<GenericRecord> genericRecords = processTuple.get(JsonToAvroFnV1.validTag)
+                .setCoder(AvroCoder.of(GenericRecord.class, avroSchemaObj));
+        PCollection<Failure> failureRecords = processTuple.get(JsonToAvroFnV1.failuresTag);
+
+        genericRecords.apply("Write Avro formatted data", AvroIO.writeGenericRecords(avroSchema)
+                .to(jobConfig.getOutputFilePath()).withCodec(CodecFactory.snappyCodec())
+                .withSuffix(".avro"));
 
         // Run the pipeline.
         pipeline.run().waitUntilFinish();

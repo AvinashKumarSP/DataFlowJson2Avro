@@ -1,1 +1,1 @@
-{"date_time": "2021-02-28T00:01:56+00:00","store_id": "123","pos_id":"123abc","customer_type": "regular","delivery_type": "online","items_cost_list": [50,75,100],"number_of_items": 3}
+{"date_time": "2021-02-28T00:01:56+00:00","store_id": 101,"pos_id":"123abc","customer_type": "regular","delivery_type": "online","items_cost_list": [50,75,100],"number_of_items": 3}

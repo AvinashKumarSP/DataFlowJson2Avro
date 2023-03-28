@@ -9,6 +9,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
+    "feedName",
     "header",
     "skipHeader",
     "skipTrailer",
@@ -18,12 +19,15 @@ import org.apache.commons.lang.builder.ToStringBuilder;
     "outputFilePath",
     "avroDirectory",
     "avroSchemaPath",
+    "jsonSchemaPath",
     "srcToTgtMap",
     "standardization"
 })
 public class JobConfig implements Serializable
 {
 
+    @JsonProperty("feedName")
+    private String feedName;
     @JsonProperty("header")
     private String header;
     @JsonProperty("skipHeader")
@@ -42,10 +46,27 @@ public class JobConfig implements Serializable
     private String avroDirectory;
     @JsonProperty("avroSchemaPath")
     private String avroSchemaPath;
+    @JsonProperty("jsonSchemaPath")
+    private String jsonSchemaPath;
     @JsonProperty("srcToTgtMap")
     private String srcToTgtMap;
     @JsonProperty("standardization")
     private Standardization standardization;
+
+    @JsonProperty("feedName")
+    public String getFeedName() {
+        return feedName;
+    }
+
+    @JsonProperty("feedName")
+    public void setFeedName(String feedName) {
+        this.feedName = feedName;
+    }
+
+    public JobConfig withFeedName(String feedName) {
+        this.feedName = feedName;
+        return this;
+    }
 
     @JsonProperty("header")
     public String getHeader() {
@@ -182,6 +203,21 @@ public class JobConfig implements Serializable
         return this;
     }
 
+    @JsonProperty("jsonSchemaPath")
+    public String getJsonSchemaPath() {
+        return jsonSchemaPath;
+    }
+
+    @JsonProperty("jsonSchemaPath")
+    public void setJsonSchemaPath(String jsonSchemaPath) {
+        this.jsonSchemaPath = jsonSchemaPath;
+    }
+
+    public JobConfig withJsonSchemaPath(String jsonSchemaPath) {
+        this.jsonSchemaPath = jsonSchemaPath;
+        return this;
+    }
+
     @JsonProperty("srcToTgtMap")
     public String getSrcToTgtMap() {
         return srcToTgtMap;
@@ -214,7 +250,7 @@ public class JobConfig implements Serializable
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("header", header).append("skipHeader", skipHeader).append("skipTrailer", skipTrailer).append("jsonSchemaClass", jsonSchemaClass).append("avroSchemaClass", avroSchemaClass).append("inputFilePath", inputFilePath).append("outputFilePath", outputFilePath).append("avroDirectory", avroDirectory).append("avroSchemaPath", avroSchemaPath).append("srcToTgtMap", srcToTgtMap).append("standardization", standardization).toString();
+        return new ToStringBuilder(this).append("feedName", feedName).append("header", header).append("skipHeader", skipHeader).append("skipTrailer", skipTrailer).append("jsonSchemaClass", jsonSchemaClass).append("avroSchemaClass", avroSchemaClass).append("inputFilePath", inputFilePath).append("outputFilePath", outputFilePath).append("avroDirectory", avroDirectory).append("avroSchemaPath", avroSchemaPath).append("jsonSchemaPath", jsonSchemaPath).append("srcToTgtMap", srcToTgtMap).append("standardization", standardization).toString();
     }
 
 }

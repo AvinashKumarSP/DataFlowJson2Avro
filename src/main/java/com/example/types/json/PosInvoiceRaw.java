@@ -23,7 +23,7 @@ public class PosInvoiceRaw {
     @JsonProperty("date_time")
     private String dateTime;
     @JsonProperty("store_id")
-    private String storeId;
+    private Integer storeId;
     @JsonProperty("pos_id")
     private String posId;
     @JsonProperty("customer_type")
@@ -51,16 +51,16 @@ public class PosInvoiceRaw {
     }
 
     @JsonProperty("store_id")
-    public String getStoreId() {
+    public Integer getStoreId() {
         return storeId;
     }
 
     @JsonProperty("store_id")
-    public void setStoreId(String storeId) {
+    public void setStoreId(Integer storeId) {
         this.storeId = storeId;
     }
 
-    public PosInvoiceRaw withStoreId(String storeId) {
+    public PosInvoiceRaw withStoreId(Integer storeId) {
         this.storeId = storeId;
         return this;
     }

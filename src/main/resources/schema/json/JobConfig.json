@@ -3,6 +3,7 @@
   "javaType": "com.example.types.JobConfig",
   "javaInterfaces" : ["java.io.Serializable"],
   "properties": {
+    "feedName": {"type": "string"},
     "header": {"type": "string"},
     "skipHeader": {"type": "boolean"},
     "skipTrailer": {"type": "boolean"},
@@ -12,6 +13,7 @@
     "outputFilePath": {"type": "string"},
     "avroDirectory": {"type": "string"},
     "avroSchemaPath": {"type": "string"},
+    "jsonSchemaPath": {"type": "string"},
     "srcToTgtMap": {"type": "string"},
     "standardization": {
       "type": "object",
